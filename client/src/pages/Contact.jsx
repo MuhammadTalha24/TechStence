@@ -1,15 +1,41 @@
 import React from 'react'
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import { useAuth } from '../store/authContext'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         message: ''
     })
-    const formSubmit = (e) => {
+    const { user } = useAuth();
+
+
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                name: user.username,
+                email: user.email,
+                message: ''
+            })
+        }
+    }, [user])
+
+    const formSubmit = async (e) => {
         e.preventDefault()
-        console.log(formData)
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/contact', formData)
+            toast.success(response.data.message)
+            setFormData({
+                name: user.username,
+                email: user.email,
+                message: ''
+            })
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
+
     }
 
     const handleChange = (e) => {

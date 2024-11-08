@@ -15,6 +15,6 @@ export const verifyToken = async (req, res, next) => {
     req.user = user
     req.token = tokenWithoutBearer
     req.userId = isVerified.id
-
+    req.isAdmin = isVerified.isAdmin
     next()
 }

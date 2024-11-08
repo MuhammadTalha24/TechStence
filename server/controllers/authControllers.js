@@ -30,7 +30,7 @@ export const userRegister = async (req, res, next) => {
             phone
         })
 
-        const token = jwt.sign({ id: user._id, username: user.username, email: user.email }, process.env.JWT_SECRET, { expiresIn: "30d" })
+        const token = jwt.sign({ id: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: "30d" })
 
 
 
@@ -73,7 +73,7 @@ export const userLogin = async (req, res, next) => {
             })
         }
 
-        const token = jwt.sign({ id: user._id, username: user.username, email: user.email }, process.env.JWT_SECRET, { expiresIn: "30d" })
+        const token = jwt.sign({ id: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: "30d" })
 
         return res.status(200).json({
             message: "Login Successfull",

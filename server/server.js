@@ -1,11 +1,13 @@
 import express from 'express'
 import authRoutes from './routes/authRoutes.js'
 import contactRoutes from './routes/contactRoute.js'
+import adminRoutes from './routes/adminRoutes.js'
 import dbConnection from './db/dbConnection.js';
 import env from 'dotenv'
 import errorHandler from './middlewares/errorMiddleware.js';
 import cors from 'cors'
 import userRoutes from './routes/userRoutes.js'
+import serviceRoutes from './routes/serviceRoutes.js'
 const app = express();
 env.config()
 
@@ -23,6 +25,8 @@ app.use(cors({
 app.use('/api/v1', authRoutes);
 app.use('/api/v1', contactRoutes);
 app.use('/api/v1', userRoutes);
+app.use('/api/v1', serviceRoutes);
+app.use('/api/v1', adminRoutes);
 app.use(errorHandler);
 
 dbConnection().then(() => {
